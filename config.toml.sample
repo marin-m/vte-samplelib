@@ -1,0 +1,16 @@
+[vmlinux-to-elf]
+use-ssh = false
+ssh-config = { }
+project-dir = "/home/marin/vte-samplelib"
+
+[samples]
+use-ssh = false
+ssh-config = { }
+samples-dir = "samples/"
+
+[compilation]
+use-ssh = true
+ssh-config = { host = "some-host", port = 22, user = "johndoe", private_key = "/home/marin/.ssh/johndoe-ssh" }
+# NOTE: Use a Virtualbox VM for cross-compiling to MIPS (or compiling other kernels/with older GCC versions?).
+# TODO: Study what to use better to get toolchains/build Kernels? (What was the Neufbox4 project using? buildroot? ...)
+kernel-git-dir = "/home/marin/linux-git"

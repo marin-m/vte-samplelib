@@ -1,0 +1,28 @@
+
+[build-system]
+requires = ["uv_build>=0.9.26,<0.10.0"]
+build-backend = "uv_build"
+
+[project]
+name = "vmlinux-to-elf-samplelib"
+version = "1.0"
+dependencies = [
+    "lz4>=4.4.5",
+    "zstandard>=0.25.0",
+    "minilzo>=1.2",
+
+    "peewee"
+]
+requires-python = ">=3.11" # tomllib was added in Python 3.11
+authors = [{ name = "Marin Moulinier" }]
+description = "Additional package to vmlinux-to-elf to sort out available kernel samples, provide CI/CD, generate kernel blobs with and without symbols from scratch"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+
+[project.urls]
+Homepage = "https://github.com/marin-m/vte-samplelib"
+
+[project.scripts]
+samplelib-show-db = "vmlinux_to_elf_samplelib.scripts.show_db:main"
+samplelib-scrape = "vmlinux_to_elf_samplelib.scripts.scrape_kernel_info:main"

@@ -1,0 +1,8 @@
+config.toml
+
+*.pyc
+__pycache__/
+.~lock.*
+
+**/*.egg-info/
+**/.idea/
