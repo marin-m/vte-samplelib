@@ -8,6 +8,11 @@
       * https://docs.peewee-orm.com/en/latest/peewee/models.html
     * http://synology-marin/mediawiki/index.php?title=Vmlinux-to-elf/Planned_modules/Linux_kernel_version_DB
       * https://en.wikipedia.org/wiki/Linux_kernel_version_history
+        * https://www.mediawiki.org/wiki/API:REST_API/Reference/Sample_code:Get_page_source
+          * https://www.mediawiki.org/wiki/API:REST_API
+            * curl -s "https://en.wikipedia.org/w/rest.php/v1/page/Linux_kernel_version_history" | python3 -m json.tool | less
+          * https://www.wikidata.org/wiki/Q14579#P348
+            * => The data seems to be available on Wikidata, likely a better choice
       * https://www.kernel.org/pub/linux/kernel/ (use FTP for enumeration?)
         * https://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.10.tar.xz
     * http://synology-marin/mediawiki/index.php?title=Vmlinux-to-elf/Samples_library/Linux_2.6.10_from_Ubuntu_5.04

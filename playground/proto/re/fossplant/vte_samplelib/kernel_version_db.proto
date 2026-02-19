@@ -1,0 +1,23 @@
+edition = "2024";
+package re.fossplant.vte_samplelib;
+
+import "google/protobuf/timestamp.proto";
+
+enum KernelSource {
+    SOURCE_UNSPECIFIED = 0;.
+    SOURCE_GIT = 1;
+    SOURCE_TARBALL = 2;
+}
+
+message KernelVersion {
+    string tag = 1;
+    KernelSource source = 2;
+    google.protobuf.Timestamp git_committer_date = 3;
+    google.protobuf.Timestamp git_author_date = 4;
+    google.protobuf.Timestamp tarball_lastmod = 5;
+    google.protobuf.Timestamp makefile_lastmod = 6;
+}
+
+message KernelVersionDatabase {
+    repeated KernelVersion = 1;
+}

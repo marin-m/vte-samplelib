@@ -8,6 +8,70 @@
     * http://synology-marin/mediawiki/index.php?title=Vmlinux-to-elf/Planned_modules/Linux_kernel_version_DB
     * http://synology-marin/mediawiki/index.php?title=Vmlinux-to-elf/Samples_library/Linux_2.6.10_from_Ubuntu_5.04
 
+        => Perhaps I don't need to parse anything from Wikipedia and everything I should look at is in Git/FTP ?
+
+                ==> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Makefile
+                        => Tags are dated
+                    => All tags
+                        => https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/refs/?h=v6.19
+                    
+                https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/Makefile?h=v6.19
+                    => https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/changes.rst?h=v6.19
+                            (Document/Changes is still here but just a symlink to process/changes.rst in recent kernels)
+                                => https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/Documentation/process/changes.rst?h=v6.19
+                        => https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/snapshot/linux-6.19.tar.gz
+                                
+                    Oldest kernel in Git:
+                    => https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Makefile?h=v2.6.12
+                        => https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/Changes?h=v2.6.12
+                        => https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/snapshot/linux-2.6.12.tar.gz
+
+                        Pre-git kernel example:
+                            => https://www.kernel.org/pub/linux/kernel/v2.6/
+                                => https://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.10.tar.xz
+                                    => (Documentation/Changes w/ table + Makefile of kernel + moddate of Makefile are here)
+            
+            => Should I retrieve refs from the kernel Git tree over HTTPS?
+                Or just clone the whole kernel tree?
+
+                    "The git protocol is a special daemon that comes packaged with Git; it listens on a dedicated port
+                     (9418) that provides a service similar to the SSH protocol, but with absolutely no authentication."
+                        Cf. https://stackoverflow.com/questions/33846856/what-exactly-is-the-git-protocol
+
+                            time git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+                                => Cloned real	6m40,658s user	15m7,114s sys	1m47,165s
+                                    Cf. https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/?h=v6.19
+
+                        19:37:12:marin:~$ du -sh linux
+                            5.3G	linux
+            
+                            https://stackoverflow.com/questions/18995854/how-can-i-use-github-api-to-get-all-tags-or-releases-for-a-project
+
+                            http://developer.github.com/v3/git/refs/
+                                GET /repos/:owner/:repo/git/refs/tags
+                            
+                                $ git tags
+
+
+                                https://docs.github.com/en/rest/git/tags?apiVersion=2022-11-28#get-a-tag
+                                  https://api.github.com/repos/OWNER/REPO/git/tags/TAG_SHA
+                
+            !!
+                https://api.github.com/repos/torvalds/linux/git/refs/tags
+                    => https://api.github.com/repos/torvalds/linux/git/tags/26791a8bcf0e6d33f43aef7682bdb555236d56de
+                        => https://api.github.com/repos/torvalds/linux/git/commits/9ee1c939d1cb936b1f98e8d81aeffab57bae46ab
+                            => date	"2005-06-17T19:48:29Z"
+
+
+                https://gitpython.readthedocs.io/en/stable/tutorial.html
+
+                        = ⚠️=> GitPython provides object model access to your git
+                          repository. This tutorial is composed of multiple sections,
+                          most of which explain a real-life use case.
+
+        => Perhaps I will need to build a SQLite database only much later than now and I should focus on
+           outputting minimally viable JSON (or CSV) output?
+
     WIP 2025-01-25
 """
 
@@ -21,6 +85,10 @@ from re import search, IGNORECASE
 
 # https://www.kernel.org/pub/linux/kernel/ (use FTP for enumeration?)
 #  * https://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.10.tar.xz
+
+
+# => 2026-02-19  PERHAPS USE JSON/CSV OR PROTO OUTPUT BEFORE IMPORTING ANYTHING TO SQLITE ?
+
 
 # https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/
 # https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/Changes?h=v2.6.12
