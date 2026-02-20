@@ -24,8 +24,11 @@
 from os.path import dirname, realpath, exists
 from logging import debug, getLogger, DEBUG
 from os import makedirs
+from enum import Enum
 
-from peewee import SqliteDatabase, Model, TextField, DateField, ForeignKeyField
+from peewee import (SqliteDatabase, Model, TextField,
+                    DateTimeField, BooleanField, ForeignKeyField)
+from peewee_enum_field import EnumField
 
 CORE_DIR = dirname(realpath(__file__))
 ROOT_DIR = dirname(dirname(dirname(CORE_DIR)))
@@ -46,10 +49,30 @@ class Base(Model):
     class Meta:
         database = db
 
-class KernelRelease(Base):
+class KernelSource(Enum):
+    SOURCE_GIT = 1
+    SOURCE_TARBALL = 2
 
-    version_string = TextField()
-    release_date = DateField()
+# Cf. https://docs.peewee-orm.com/en/latest/peewee/models.html#field-types-table
+
+class KernelVersion(Base):
+
+    # "Because we have not specified a primary key, peewee will
+    # automatically add an auto-incrementing integer primary
+    # key field named id.
+
+    version_string = TextField() # Git tag
+    kernel_source = EnumField(KernelSource)
+
+    browse_url = TextField()
+    download_url = TextField()
+    git_commit = TextField()
+
+    git_committer_date = DateTimeField()
+    git_author_date = DateTimeField()
+
+    tarball_lastmod = DateTimeField()
+    makefile_lastmod = DateTimeField()
 
     # Xx Dependencies table here (parse Changelog.txt?)
     #     => Link to n KernelReleaseDependency
@@ -58,25 +81,26 @@ class KernelRelease(Base):
     tarball_url = TextField()
     vcs_browser_url = TextField() # optional, or just tarball URL if not available
 
-class KernelReleaseDependency(Base):
+class KernelVersionDependency(Base):
     
     # Parsed from the `Documentation/Changes` kernel files:
 
-    release = ForeignKeyField(KernelRelease, backref = 'dependencies')
+    release = ForeignKeyField(KernelVersion, backref = 'dependencies')
 
     dependency_name = TextField()
     minimal_version = TextField()
-    version_check_cmd = TextField()
-    base_cmd = TextField()
+    base_command = TextField()
+    version_command = TextField()
+    dependency_is_optional = BooleanField()
+
+class KernelRelevantFile(Base):
+    release = ForeignKeyField(KernelVersion, backref = 'relevant_files')
+
+    file_name = TextField()
+    data = TextField()
+    vcs_browser_url = TextField()
 
 """
-class KernelReleaseKallsymsRelatedFile(Base):
-    xx
-    file_name
-    commit_hash
-    commit_desc
-    vcs_browser_url
-
 class StoredKernel(Base):
 
     XX
@@ -88,5 +112,14 @@ class DebianRelease(Base):
     XX
 """
 
-# db.connect()
-# db.create_tables([KernelRelease, KernelReleaseDependency])
+db.connect()
+
+def flush_kernel_db():
+    models = [
+        KernelVersion,
+        KernelVersionDependency,
+        KernelRelevantFile
+    ]
+    
+    db.drop_tables(models)
+    db.create_tables(models)

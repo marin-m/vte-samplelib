@@ -90,6 +90,18 @@ wheels = [
 ]
 
 [[package]]
+name = "peewee-enum-field"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "peewee" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7e/dc/003bd673d0cd791925c28c6db310575a43a048a2cacfc4755e2582f993bc/peewee_enum_field-0.2.0.tar.gz", hash = "sha256:13b4e453cd35c3e0cf5df991340c4355d614056d2a1abc00f548a37a3bb62504", size = 3017, upload-time = "2024-09-15T10:56:22.869Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6c/02/00468507590d827a21e6f3209d72485f2110c1024adf3463c4ff41f64332/peewee_enum_field-0.2.0-py3-none-any.whl", hash = "sha256:28bb3aaeab9bbe639209ed8dd8673c60e04ece199eb8c6962205df6a3a28e24a", size = 3394, upload-time = "2024-09-15T10:56:21.341Z" },
+]
+
+[[package]]
 name = "protobuf"
 version = "6.33.5"
 source = { registry = "https://pypi.org/simple" }
@@ -122,6 +134,7 @@ dependencies = [
     { name = "lz4" },
     { name = "minilzo" },
     { name = "peewee" },
+    { name = "peewee-enum-field" },
     { name = "protobuf" },
     { name = "zstandard" },
 ]
@@ -132,6 +145,7 @@ requires-dist = [
     { name = "lz4", specifier = ">=4.4.5" },
     { name = "minilzo", specifier = ">=1.2" },
     { name = "peewee" },
+    { name = "peewee-enum-field", specifier = ">=0.2.0" },
     { name = "protobuf", specifier = ">=6.33.5" },
     { name = "zstandard", specifier = ">=0.25.0" },
 ]

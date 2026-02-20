@@ -13,6 +13,7 @@ dependencies = [
     "peewee",
     "gitpython>=3.1.46",
     "protobuf>=6.33.5",
+    "peewee-enum-field>=0.2.0",
 ]
 requires-python = ">=3.11" # tomllib was added in Python 3.11
 authors = [{ name = "Marin Moulinier" }]
@@ -30,4 +31,5 @@ Homepage = "https://github.com/marin-m/vte-samplelib"
 
 [project.scripts]
 samplelib-show-db = "vte_samplelib.scripts.show_db:main"
+samplelib-show-config = "vte_samplelib.scripts.show_config:main"
 samplelib-extract-info = "vte_samplelib.scripts.extract_kernel_info:main"

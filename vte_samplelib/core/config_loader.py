@@ -6,8 +6,9 @@ from typing import Dict
 from json import dumps
 
 SCRIPT_DIR = dirname(realpath(__file__))
+MODULE_DIR = dirname(realpath(SCRIPT_DIR))
 
-BASE_DIR = dirname(realpath(SCRIPT_DIR))
+BASE_DIR = dirname(realpath(MODULE_DIR))
 
 CONFIG_PATH = join(BASE_DIR, 'config.toml')
 
@@ -22,7 +23,3 @@ class ConfigLoader:
         with open(CONFIG_PATH, 'rb') as fd:
             self.config_dict = load(fd)
 
-if __name__ == '__main__':
-    loader = ConfigLoader()
-
-    print(dumps(loader.config_dict, indent = 4))
