@@ -30,4 +30,4 @@ Homepage = "https://github.com/marin-m/vte-samplelib"
 
 [project.scripts]
 samplelib-show-db = "vte_samplelib.scripts.show_db:main"
-samplelib-scrape = "vte_samplelib.scripts.scrape_kernel_info:main"
+samplelib-extract-info = "vte_samplelib.scripts.extract_kernel_info:main"

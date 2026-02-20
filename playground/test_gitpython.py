@@ -5,6 +5,9 @@ environ['GIT_PYTHON_TRACE'] = 'full'
 from logging import basicConfig, INFO
 basicConfig(level = INFO)
 
+# import vte_samplelib.pb.re.fossplant.vte_samplelib.kernel_version_db_pb2 as pb
+# pb.KernelRelevantFile
+
 from git import Repo, Blob
 
 KERNEL_DIR = '/home/marin/linux'

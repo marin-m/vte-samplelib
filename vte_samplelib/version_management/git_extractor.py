@@ -75,11 +75,13 @@
     WIP 2025-01-25
 """
 
-from vte_samplelib.core.database import (
-    KernelRelease, KernelReleaseDependency
-)
+# from vte_samplelib.core.database import (
+#     KernelRelease, KernelReleaseDependency
+# )
 
 from re import search, IGNORECASE
+
+from git import Repo, Blob
 
 # https://en.wikipedia.org/wiki/Linux_kernel_version_history
 
@@ -98,6 +100,10 @@ from re import search, IGNORECASE
 # Sample kernel requirements (recent): https://github.com/torvalds/linux/blob/v6.19-rc7/Documentation/process/changes.rst
 
 # Sample kernel requirements (old): https://github.com/torvalds/linux/blob/v2.6.19/Documentation/Changes
+
+class GitParser:
+
+    pass # XX wip
 
 class ChangelogParser:
 
@@ -143,18 +149,5 @@ class ChangelogParser:
 
 
         pass # todo
-
-class WikipediaFetcher: # TODO UNPLAN FOR GIT?
-
-    pass # todo # Use REST API + regex
-
-    # Do:
-    # KernelRelease.create(XX)
-    # KernelReleaseDependency.create(XX)
-    # (See: https://docs.peewee-orm.com/en/latest/peewee/quickstart.html)
-
-class FTPFetcher: # UNPLAN FOR HTTP?
-
-    pass # todo
 
 # xx wip
