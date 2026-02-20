@@ -4,18 +4,36 @@ package re.fossplant.vte_samplelib;
 import "google/protobuf/timestamp.proto";
 
 enum KernelSource {
-    SOURCE_UNSPECIFIED = 0;.
+    SOURCE_UNSPECIFIED = 0;
     SOURCE_GIT = 1;
     SOURCE_TARBALL = 2;
+}
+
+message KernelVersionDependency {
+    string base_command = 1;
+    string version_command = 2;
+    string dependency_name = 3;
+    bool dependency_is_optional = 4;
+    string minimal_version = 5;
+}
+
+message KernelRelevantFile {
+    string path = 1;
+    string data = 2;
 }
 
 message KernelVersion {
     string tag = 1;
     KernelSource source = 2;
-    google.protobuf.Timestamp git_committer_date = 3;
-    google.protobuf.Timestamp git_author_date = 4;
-    google.protobuf.Timestamp tarball_lastmod = 5;
-    google.protobuf.Timestamp makefile_lastmod = 6;
+    string browse_url = 3;
+    string download_url = 4;
+    string git_commit = 5;
+    google.protobuf.Timestamp git_committer_date = 6;
+    google.protobuf.Timestamp git_author_date = 7;
+    google.protobuf.Timestamp tarball_lastmod = 8;
+    google.protobuf.Timestamp makefile_lastmod = 9;
+    repeated KernelRelevantFile relevant_file = 10;
+    repeated KernelVersionDependency dependency = 11;
 }
 
 message KernelVersionDatabase {

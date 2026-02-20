@@ -88,5 +88,5 @@ class DebianRelease(Base):
     XX
 """
 
-db.connect()
-db.create_tables([KernelRelease, KernelReleaseDependency])
+# db.connect()
+# db.create_tables([KernelRelease, KernelReleaseDependency])
