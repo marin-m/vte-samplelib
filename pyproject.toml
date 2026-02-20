@@ -21,9 +21,13 @@ readme = "README.md"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
 
+[tool.uv.build-backend]
+module-name = "vte_samplelib"
+module-root = ""
+
 [project.urls]
 Homepage = "https://github.com/marin-m/vte-samplelib"
 
 [project.scripts]
-samplelib-show-db = "vmlinux_to_elf_samplelib.scripts.show_db:main"
-samplelib-scrape = "vmlinux_to_elf_samplelib.scripts.scrape_kernel_info:main"
+samplelib-show-db = "vte_samplelib.scripts.show_db:main"
+samplelib-scrape = "vte_samplelib.scripts.scrape_kernel_info:main"

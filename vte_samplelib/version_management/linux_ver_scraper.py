@@ -75,7 +75,7 @@
     WIP 2025-01-25
 """
 
-from vmlinux_to_elf_samplelib.core.database import (
+from vte_samplelib.core.database import (
     KernelRelease, KernelReleaseDependency
 )
 
@@ -127,8 +127,8 @@ class ChangelogParser:
                     progver = line[progver_start:progver_end].rstrip()
                     progcmd = line[progcmd_start:].rstrip()
 
-                    dep = KernelReleaseDependency.create(XX
-                    dep.save()
+                    # dep = KernelReleaseDependency.create(XX)
+                    # dep.save()
                                                    
                     # XX links things
                     # XX save things to database
@@ -144,7 +144,7 @@ class ChangelogParser:
 
         pass # todo
 
-class WikipediaFetcher:
+class WikipediaFetcher: # TODO UNPLAN FOR GIT?
 
     pass # todo # Use REST API + regex
 
@@ -153,7 +153,7 @@ class WikipediaFetcher:
     # KernelReleaseDependency.create(XX)
     # (See: https://docs.peewee-orm.com/en/latest/peewee/quickstart.html)
 
-class FTPFetcher:
+class FTPFetcher: # UNPLAN FOR HTTP?
 
     pass # todo
 

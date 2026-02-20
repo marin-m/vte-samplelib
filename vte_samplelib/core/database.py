@@ -25,7 +25,7 @@ from os.path import dirname, realpath, exists
 from logging import debug, getLogger, DEBUG
 from os import makedirs
 
-from peewee import SqliteDatabase, Model, TextField, DateField
+from peewee import SqliteDatabase, Model, TextField, DateField, ForeignKeyField
 
 CORE_DIR = dirname(realpath(__file__))
 ROOT_DIR = dirname(dirname(dirname(CORE_DIR)))
@@ -51,14 +51,14 @@ class KernelRelease(Base):
     version_string = TextField()
     release_date = DateField()
 
-    Xx Dependencies table here (parse Changelog.txt?)
-        => Link to n KernelReleaseDependency
+    # Xx Dependencies table here (parse Changelog.txt?)
+    #     => Link to n KernelReleaseDependency
 
     git_tag = TextField() # optional, or just tarball URL if not available
     tarball_url = TextField()
     vcs_browser_url = TextField() # optional, or just tarball URL if not available
 
-class KernelReleaseDependency(Base);
+class KernelReleaseDependency(Base):
     
     # Parsed from the `Documentation/Changes` kernel files:
 

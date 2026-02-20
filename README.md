@@ -4,6 +4,8 @@ TODO: Make a CI/CD-alike pipeline to **build kernels and generate usable test sa
 
 Cf. http://synology-marin/mediawiki/index.php/Vmlinux-to-elf/Samples_library
 
+Use `uv sync` to create a local `.venv` and/or `uv install -e .` to make the script commands in `vte_samplelib/scripts` usable locally.
+
 > TODO: Use samples sorted within folders with symlink (by-version, by-architecture, etc.) just like https://github.com/P1sec/capture-zoo for PCAPs?
 
 ## Utils to write proposals
