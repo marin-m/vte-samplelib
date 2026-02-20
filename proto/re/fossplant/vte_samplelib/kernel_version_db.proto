@@ -1,4 +1,4 @@
-edition = "2024";
+syntax = "proto3";
 package re.fossplant.vte_samplelib;
 
 import "google/protobuf/timestamp.proto";
@@ -37,5 +37,5 @@ message KernelVersion {
 }
 
 message KernelVersionDatabase {
-    repeated KernelVersion = 1;
+    repeated KernelVersion kernel_version = 1;
 }

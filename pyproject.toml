@@ -12,6 +12,7 @@ dependencies = [
     "minilzo>=1.2",
     "peewee",
     "gitpython>=3.1.46",
+    "protobuf>=6.33.5",
 ]
 requires-python = ">=3.11" # tomllib was added in Python 3.11
 authors = [{ name = "Marin Moulinier" }]
