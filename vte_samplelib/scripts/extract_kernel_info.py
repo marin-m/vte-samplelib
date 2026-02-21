@@ -7,7 +7,7 @@ from vte_samplelib.core.database import (
     KernelSource,
     KernelVersionDependency,
     KernelRelevantFile,
-    flush_kernel_db
+    flush_kernel_db,
 )
 
 from git import Repo, Blob
@@ -15,28 +15,29 @@ from logging import info
 
 from vte_samplelib.version_management.git_extractor import (
     # ExtraGitParser, # TODO
-    ChangelogParser
+    ChangelogParser,
 )
 
-REMOTE_URL = 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/'
-TREE_ROOT_URL = REMOTE_URL + 'tree/?id=%s'
-SNAPSHOT_URL = REMOTE_URL + 'snapshot/%s.tar.gz'
+REMOTE_URL = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
+TREE_ROOT_URL = REMOTE_URL + "tree/?id=%s"
+SNAPSHOT_URL = REMOTE_URL + "snapshot/%s.tar.gz"
+
 
 def main():
     flush_kernel_db()
 
     config = ConfigLoader().config_dict
 
-    repo = Repo(config['kernel-tree']['git-dir'])
+    repo = Repo(config["kernel-tree"]["git-dir"])
 
     for tag_ref in repo.tags:
         tag = tag_ref.object
         tag_object = tag.object
 
-        if tag_object.type == 'commit':
+        if tag_object.type == "commit":
             tree = tag_object.tree
 
-            info('Writing info for %s to DB' % tag.tag)
+            info("Writing info for %s to DB" % tag.tag)
 
             kernel = KernelVersion()
             kernel.version_string = tag.tag
@@ -48,4 +49,3 @@ def main():
             kernel.save()
 
             ChangelogParser(tree, kernel)
-            

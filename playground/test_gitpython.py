@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-#-*- encoding: Utf-8 -*-
+# -*- encoding: Utf-8 -*-
 from os import environ
-environ['GIT_PYTHON_TRACE'] = 'full'
+
+environ["GIT_PYTHON_TRACE"] = "full"
 from logging import basicConfig, INFO
-basicConfig(level = INFO)
+
+basicConfig(level=INFO)
 
 # import vte_samplelib.pb.re.fossplant.vte_samplelib.kernel_version_db_pb2 as pb
 # pb.KernelRelevantFile
 
 from git import Repo, Blob
 
-KERNEL_DIR = '/home/marin/linux'
+KERNEL_DIR = "/home/marin/linux"
 
 # Cf. https://gitpython.readthedocs.io/en/stable/tutorial.html
 # WIP
@@ -102,25 +104,39 @@ print(repo.tags[9].commit.committed_datetime, '/', repo.tags[9].commit.authored_
 exit()
 """
 
+
 def print_blob(blob):
-    print('=>', blob.mime_type, 'link=%s' % bool(blob.mode == blob.link_mode), '%dk' % (blob.size / 1024), blob.path, oct(blob.mode), blob.data_stream.read(196))
+    print(
+        "=>",
+        blob.mime_type,
+        "link=%s" % bool(blob.mode == blob.link_mode),
+        "%dk" % (blob.size / 1024),
+        blob.path,
+        oct(blob.mode),
+        blob.data_stream.read(196),
+    )
+
 
 for tag_ref in repo.tags:
     tag = tag_ref.object
     tag_object = tag.object
 
-    print(f'[{ tag_ref.path } tag={ tag.tag } ref={ tag.hexsha }]')
-    if tag_object.type == 'commit':
+    print(f"[{tag_ref.path} tag={tag.tag} ref={tag.hexsha}]")
+    if tag_object.type == "commit":
         # if tag_object.committed_datetime != tag_object.authored_datetime:
         #     print('  WARNING MISMATCHING DATES')
-        print(f'  [commit ref={ tag_object.hexsha } committed_datetime={ tag_object.committed_datetime } authored_datetime={ tag_object.authored_datetime }]')
+        print(
+            f"  [commit ref={tag_object.hexsha} committed_datetime={tag_object.committed_datetime} authored_datetime={tag_object.authored_datetime}]"
+        )
         tree = tag_object.tree
-        print(f'    [tree ref={ tree.hexsha }]')
-        print(f'      [{ [x.path for x in tree.trees] }] [{ [x.path for x in tree.blobs] }]')
-        print_blob(tree / 'Makefile')
-        print_blob(tree / 'Documentation/Changes')
-        if tree['Documentation/Changes'].mode == Blob.link_mode:
-            print_blob(tree / 'Documentation/process/changes.rst')
+        print(f"    [tree ref={tree.hexsha}]")
+        print(
+            f"      [{[x.path for x in tree.trees]}] [{[x.path for x in tree.blobs]}]"
+        )
+        print_blob(tree / "Makefile")
+        print_blob(tree / "Documentation/Changes")
+        if tree["Documentation/Changes"].mode == Blob.link_mode:
+            print_blob(tree / "Documentation/process/changes.rst")
         """
         for blob in tree.blobs:
             if blob.path == 'Makefile':
@@ -145,6 +161,6 @@ for tag_ref in repo.tags:
 
                 break
         """
-    elif tag_object.type == 'tree':
-        print(f'  [tree ref={ tag_object.hexsha }]')
+    elif tag_object.type == "tree":
+        print(f"  [tree ref={tag_object.hexsha}]")
     print()

@@ -1,4 +1,3 @@
-
 """
 from vte_samplelib.version_management.git_extractor import (
     ChangelogParser, WikipediaFetcher, FTPFetcher
@@ -6,7 +5,6 @@ from vte_samplelib.version_management.git_extractor import (
 """
 
 # import vte_samplelib.pb.re.fossplant.vte_samplelib.kernel_version_db_pb2 as pb
-
 
 """
 class WikipediaFetcher: # TODO UNPLAN FOR GIT?
