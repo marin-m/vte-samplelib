@@ -140,7 +140,7 @@ class ChangelogParser:
             rel_file.file_name,
             kernel.version_string,
         )
-        rel_file.save()
+        rel_file.save(force_insert=True)
 
         reached_gnuc_verspec = False
 
@@ -174,7 +174,7 @@ class ChangelogParser:
                     dep.base_command = progcmd.split(" ")[0]
                     dep.version_command = progcmd
                     dep.dependency_is_optional = "(optional)" in progname
-                    dep.save()
+                    dep.save(force_insert=True)
 
                     # XX links things
                     # XX save things to database

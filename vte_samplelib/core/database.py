@@ -29,12 +29,13 @@ from enum import Enum
 from peewee import (
     SqliteDatabase,
     Model,
+    CompositeKey,
+    SchemaManager,
     TextField,
     DateTimeField,
     BooleanField,
     ForeignKeyField,
 )
-from peewee_enum_field import EnumField
 
 CORE_DIR = dirname(realpath(__file__))
 MODULE_DIR = dirname(realpath(CORE_DIR))
@@ -58,9 +59,7 @@ class Base(Model):
         legacy_table_names = False
 
 
-class KernelSource(Enum):
-    SOURCE_GIT = 1
-    SOURCE_TARBALL = 2
+schema_manager = SchemaManager(Base, db)
 
 
 # Cf. https://docs.peewee-orm.com/en/latest/peewee/models.html#field-types-table
@@ -72,7 +71,7 @@ class KernelVersion(Base):
     # key field named id.
 
     version_string = TextField(primary_key=True)  # Git tag
-    kernel_source = EnumField(KernelSource)
+    kernel_source = TextField()  # Oneof "git", "tarball"
 
     browse_url = TextField()
     download_url = TextField()
@@ -104,6 +103,9 @@ class KernelVersionDependency(Base):
     base_command = TextField(index=True)
     version_command = TextField()
     dependency_is_optional = BooleanField()
+
+    class Meta:
+        primary_key = CompositeKey("kernel_release", "base_command")
 
 
 """

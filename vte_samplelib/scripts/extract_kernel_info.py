@@ -4,7 +4,6 @@ from vte_samplelib.core.config_loader import ConfigLoader
 
 from vte_samplelib.core.database import (
     KernelVersion,
-    KernelSource,
     KernelVersionDependency,
     KernelRelevantFile,
     flush_kernel_db,
@@ -30,9 +29,15 @@ def main():
 
     repo = Repo(config["kernel-tree"]["git-dir"])
 
+    seen_refs: set[str] = set()
+
     for tag_ref in repo.tags:
         tag = tag_ref.object
         tag_object = tag.object
+
+        if tag.tag in seen_refs:
+            continue
+        seen_refs.add(tag.tag)
 
         if tag_object.type == "commit":
             tree = tag_object.tree
@@ -41,11 +46,11 @@ def main():
 
             kernel = KernelVersion()
             kernel.version_string = tag.tag
-            kernel.kernel_source = KernelSource.SOURCE_GIT
+            kernel.kernel_source = "git"
             kernel.browse_url = TREE_ROOT_URL % tag.tag
             kernel.download_url = SNAPSHOT_URL % tag.tag
             kernel.git_commit = tag_object.hexsha
             kernel.release_date = tag_object.committed_datetime
-            kernel.save()
+            kernel.save(force_insert=True)
 
             ChangelogParser(tree, kernel)
