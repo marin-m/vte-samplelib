@@ -81,7 +81,13 @@
 
 from re import search, IGNORECASE
 
-from git import Repo, Blob
+from vte_samplelib.core.database import (
+    KernelVersion,
+    KernelVersionDependency,
+    KernelRelevantFile,
+)
+
+from git import Tree, Blob
 
 # https://en.wikipedia.org/wiki/Linux_kernel_version_history
 
@@ -101,17 +107,37 @@ from git import Repo, Blob
 
 # Sample kernel requirements (old): https://github.com/torvalds/linux/blob/v2.6.19/Documentation/Changes
 
-class GitParser:
+REMOTE_URL = 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/'
+TREE_URL = REMOTE_URL + 'tree/%s?id=%s'
+"""
+class ExtraGitParser:
 
     pass # XX wip
+"""
 
 class ChangelogParser:
 
-    def __init__(self):
+    def __init__(self, tree : Tree, kernel : KernelVersion):
 
-        xx # Use GIT + regexes
+        changelog_file = tree['Documentation/Changes']
+
+        if changelog_file.mode == Blob.link_mode:
+            changelog_file = tree['Documentation/process/changes.rst']
+
+        try:
+            text = changelog_file.data_stream.read().decode('utf-8')
+        except UnicodeDecodeError:
+            text = changelog_file.data_stream.read().decode('cp1252')
 
         lines = text.splitlines(keepends = False)
+
+        dep = KernelRelevantFile()
+        dep.release = kernel
+        dep.file_name = changelog_file.path
+        # dep.data = text
+        dep.architecture_code = None
+        dep.vcs_browser_url = TREE_URL % (dep.file_name, kernel.version_string)
+        dep.save()
 
         reached_gnuc_verspec = False
 
@@ -133,8 +159,14 @@ class ChangelogParser:
                     progver = line[progver_start:progver_end].rstrip()
                     progcmd = line[progcmd_start:].rstrip()
 
-                    # dep = KernelReleaseDependency.create(XX)
-                    # dep.save()
+                    dep = KernelVersionDependency()
+                    dep.release = kernel
+                    dep.dependency_name = progname.replace('(optional)', '').strip()
+                    dep.minimal_version = progver
+                    dep.base_command = progcmd.split(' ')[0]
+                    dep.version_command = progcmd
+                    dep.dependency_is_optional = '(optional)' in progname
+                    dep.save()
                                                    
                     # XX links things
                     # XX save things to database

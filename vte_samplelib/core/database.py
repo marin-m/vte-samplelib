@@ -63,7 +63,7 @@ class KernelVersion(Base):
     # automatically add an auto-incrementing integer primary
     # key field named id.
 
-    version_string = TextField() # Git tag
+    version_string = TextField(primary_key = True) # Git tag
     kernel_source = EnumField(KernelSource)
 
     browse_url = TextField()
@@ -83,7 +83,7 @@ class KernelVersionDependency(Base):
 
     dependency_name = TextField()
     minimal_version = TextField()
-    base_command = TextField()
+    base_command = TextField(index = True)
     version_command = TextField()
     dependency_is_optional = BooleanField()
 
@@ -91,8 +91,8 @@ class KernelRelevantFile(Base):
     release = ForeignKeyField(KernelVersion, backref = 'relevant_files')
 
     file_name = TextField()
-    data = TextField()
-    architecture_code = TextField(index = True)
+    # data = TextField()
+    architecture_code = TextField(index = True, null = True)
     vcs_browser_url = TextField()
 
 """
