@@ -141,6 +141,26 @@ for tag_ref in repo.tags:
         print_blob(tree['kernel/kallsyms.c'])
         print_blob(tree['scripts/kallsyms.c'])
         try:
+            print_blob(tree['arch/arm64/include/asm/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['arch/s390/include/asm/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['arch/x86/include/asm/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['include/asm-i386/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['include/asm-s390/elf.h'])
+        except KeyError:
+            pass
+        try:
             print_blob(tree['scripts/kallsyms'])
         except KeyError:
             pass
