@@ -49,6 +49,7 @@ db = SqliteDatabase(DB_PATH)
 class Base(Model):
     class Meta:
         database = db
+        legacy_table_names = False
 
 class KernelSource(Enum):
     SOURCE_GIT = 1
