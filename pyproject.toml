@@ -25,6 +25,9 @@ license-files = ["LICENSE"]
 module-name = "vte_samplelib"
 module-root = ""
 
+[tool.ruff]
+line-length = 79
+
 [project.urls]
 Homepage = "https://github.com/marin-m/vte-samplelib"
 

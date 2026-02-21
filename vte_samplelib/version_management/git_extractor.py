@@ -83,6 +83,8 @@ from re import search, IGNORECASE
 
 from vte_samplelib.core.database import (
     KernelVersion,
+    KnownArchitecture,
+    KernelSupportedArch,
     KernelVersionDependency,
     KernelRelevantFile,
 )
@@ -107,12 +109,16 @@ from git import Tree, Blob
 
 # Sample kernel requirements (old): https://github.com/torvalds/linux/blob/v2.6.19/Documentation/Changes
 
-REMOTE_URL = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
+REMOTE_URL = (
+    "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
+)
 TREE_URL = REMOTE_URL + "tree/%s?id=%s"
 
 
 class ExtraGitParser:
-    def __init__(self, tree: Tree, kernel: KernelVersion):
+    def __init__(
+        self, tree: Tree, kernel: KernelVersion, seen_archs: set[str]
+    ):
         pass  # XX wip
         # Indexate fields related to kernel linking + kallsyms
 

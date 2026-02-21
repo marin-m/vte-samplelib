@@ -17,7 +17,9 @@ from vte_samplelib.version_management.git_extractor import (
     ChangelogParser,
 )
 
-REMOTE_URL = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
+REMOTE_URL = (
+    "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
+)
 TREE_ROOT_URL = REMOTE_URL + "tree/?id=%s"
 SNAPSHOT_URL = REMOTE_URL + "snapshot/%s.tar.gz"
 
@@ -30,6 +32,7 @@ def main():
     repo = Repo(config["kernel-tree"]["git-dir"])
 
     seen_refs: set[str] = set()
+    seen_archs: set[str] = set()
 
     for tag_ref in repo.tags:
         tag = tag_ref.object
@@ -53,6 +56,6 @@ def main():
             kernel.release_date = tag_object.committed_datetime
             kernel.save(force_insert=True)
 
-            ExtraGitParser(tree, kernel)
+            ExtraGitParser(tree, kernel, seen_archs)
 
             ChangelogParser(tree, kernel)
