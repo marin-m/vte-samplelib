@@ -4,6 +4,8 @@ from vte_samplelib.version_management.git_extractor import (
 )
 """
 
+schema_manager = SchemaManager(Base, db)
+
 # import vte_samplelib.pb.re.fossplant.vte_samplelib.kernel_version_db_pb2 as pb
 
 """

@@ -30,7 +30,7 @@ from peewee import (
     SqliteDatabase,
     Model,
     CompositeKey,
-    SchemaManager,
+    Check,
     TextField,
     DateTimeField,
     BooleanField,
@@ -59,9 +59,6 @@ class Base(Model):
         legacy_table_names = False
 
 
-schema_manager = SchemaManager(Base, db)
-
-
 # Cf. https://docs.peewee-orm.com/en/latest/peewee/models.html#field-types-table
 
 
@@ -71,7 +68,9 @@ class KernelVersion(Base):
     # key field named id.
 
     version_string = TextField(primary_key=True)  # Git tag
-    kernel_source = TextField()  # Oneof "git", "tarball"
+    kernel_source = TextField(
+        constraints=[Check("kernel_source in ('git', 'tarball')")]
+    )
 
     browse_url = TextField()
     download_url = TextField()
