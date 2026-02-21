@@ -22,9 +22,12 @@ WIP 2025-01-25: Define database schema here
 """
 
 from os.path import dirname, realpath, exists
-from logging import debug, getLogger, DEBUG
-from os import makedirs
+from logging import basicConfig, DEBUG
+from os import makedirs, environ
 from enum import Enum
+
+environ["GIT_PYTHON_TRACE"] = "full"
+basicConfig(level=DEBUG)
 
 from peewee import (
     SqliteDatabase,
@@ -37,13 +40,12 @@ from peewee import (
     ForeignKeyField,
 )
 
+basicConfig(level=DEBUG)
+
 CORE_DIR = dirname(realpath(__file__))
 MODULE_DIR = dirname(realpath(CORE_DIR))
 ROOT_DIR = dirname(realpath(MODULE_DIR))
 DB_PATH = realpath(ROOT_DIR + "/database.sqlite3")
-
-logger = getLogger()
-logger.setLevel(DEBUG)
 
 # TODO: Write basic scrapers before implementing the database?
 
@@ -63,10 +65,6 @@ class Base(Model):
 
 
 class KernelVersion(Base):
-    # "Because we have not specified a primary key, peewee will
-    # automatically add an auto-incrementing integer primary
-    # key field named id.
-
     version_string = TextField(primary_key=True)  # Git tag
     kernel_source = TextField(
         constraints=[Check("kernel_source in ('git', 'tarball')")]
@@ -78,8 +76,20 @@ class KernelVersion(Base):
 
     release_date = DateTimeField()
 
-    # Xx Dependencies table here (parse Changelog.txt?)
-    #     => Link to n KernelReleaseDependency
+
+class KnownArchitecture(Base):
+    architecture_code = TextField(primary_key=True)
+    # XX add more fields later
+    # - ELF code
+    # - endianness
+
+
+class KernelSupportedArch(Base):
+    release = ForeignKeyField(KernelVersion, backref="supported_archs")
+    architecture = ForeignKeyField(KnownArchitecture)
+
+    class Meta:
+        primary_key = CompositeKey("release", "architecture")
 
 
 class KernelRelevantFile(Base):
@@ -123,7 +133,13 @@ db.connect()
 
 
 def flush_kernel_db():
-    models = [KernelVersion, KernelVersionDependency, KernelRelevantFile]
+    models = [
+        KernelVersion,
+        KnownArchitecture,
+        KernelSupportedArch,
+        KernelVersionDependency,
+        KernelRelevantFile,
+    ]
 
     db.drop_tables(models)
     db.create_tables(models)

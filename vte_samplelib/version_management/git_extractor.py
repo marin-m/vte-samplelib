@@ -111,10 +111,9 @@ REMOTE_URL = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 TREE_URL = REMOTE_URL + "tree/%s?id=%s"
 
 
-def __init__(self, tree: Tree, kernel: KernelVersion):
-    class ExtraGitParser:
-
-        pass # XX wip
+class ExtraGitParser:
+    def __init__(self, tree: Tree, kernel: KernelVersion):
+        pass  # XX wip
         # Indexate fields related to kernel linking + kallsyms
 
 

@@ -148,6 +148,82 @@ for tag_ref in repo.tags:
             print_blob(tree["arch/x86/boot/header.S"])
         except KeyError:
             pass
+        try:
+            print_blob(tree["arch/x86/boot/compressed/vmlinux.lds.S"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/x86/boot/compressed/Makefile"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/arm64/kernel/.vmlinux.lds.cmd"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/arm/kernel/vmlinux.lds.S"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/arm/kernel/boot/Makefile"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/i386/kernel/vmlinux.lds.S"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/i386/boot/compressed/head.S"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["Documentation/arch/x86/booting-dt.rst"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["Documentation/arch/arm64/booting.rst"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/i386/boot/bootsect.S"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/i386/boot/setup.S"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/i386/boot/compressed/Makefile"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/arm/boot/compressed/piggy.S"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/arm/boot/compressed/vmlinux.lds.in"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/arm/boot/compressed/Makefile"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["Documentation/arm/Booting"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["Documentation/x86/boot.txt"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["Documentation/arch/x86/boot.rst"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/x86/boot/boot/setup.S"])
+        except KeyError:
+            pass
         print_blob(tree["arch/arm/boot/compressed/head.S"])
         try:
             print_blob(tree["arch/arm/boot/compressed/vmlinux.lds.S"])
