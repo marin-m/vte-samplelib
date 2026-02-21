@@ -31,7 +31,8 @@ from peewee import (SqliteDatabase, Model, TextField,
 from peewee_enum_field import EnumField
 
 CORE_DIR = dirname(realpath(__file__))
-ROOT_DIR = dirname(dirname(dirname(CORE_DIR)))
+MODULE_DIR = dirname(realpath(CORE_DIR))
+ROOT_DIR = dirname(realpath(MODULE_DIR))
 DB_PATH = realpath(ROOT_DIR + '/database.sqlite3')
 
 logger = getLogger()
@@ -68,18 +69,10 @@ class KernelVersion(Base):
     download_url = TextField()
     git_commit = TextField()
 
-    git_committer_date = DateTimeField()
-    git_author_date = DateTimeField()
-
-    tarball_lastmod = DateTimeField()
-    makefile_lastmod = DateTimeField()
+    release_date = DateTimeField()
 
     # Xx Dependencies table here (parse Changelog.txt?)
     #     => Link to n KernelReleaseDependency
-
-    git_tag = TextField() # optional, or just tarball URL if not available
-    tarball_url = TextField()
-    vcs_browser_url = TextField() # optional, or just tarball URL if not available
 
 class KernelVersionDependency(Base):
     
@@ -98,6 +91,7 @@ class KernelRelevantFile(Base):
 
     file_name = TextField()
     data = TextField()
+    architecture_code = TextField(index = True)
     vcs_browser_url = TextField()
 
 """

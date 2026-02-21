@@ -103,7 +103,7 @@ exit()
 """
 
 def print_blob(blob):
-    print('=>', blob.mime_type, 'link=%s' % bool(blob.mode == blob.link_mode), '%dk' % (blob.size / 1024), blob.path, oct(blob.mode), blob.data_stream.read(96))
+    print('=>', blob.mime_type, 'link=%s' % bool(blob.mode == blob.link_mode), '%dk' % (blob.size / 1024), blob.path, oct(blob.mode), blob.data_stream.read(196))
 
 for tag_ref in repo.tags:
     tag = tag_ref.object

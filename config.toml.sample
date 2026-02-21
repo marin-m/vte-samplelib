@@ -1,3 +1,7 @@
+[kernel-tree]
+# Readonly kernel tree for enumerating versions
+git-dir = "/home/marin/linux"
+
 [vmlinux-to-elf]
 use-ssh = false
 ssh-config = { }
