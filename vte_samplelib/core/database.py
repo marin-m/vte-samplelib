@@ -78,13 +78,30 @@ class KernelVersion(Base):
     release_date = DateTimeField()
 
 
+class EMachineValue(Base):
+    elf_machine_int = IntegerField(index=True)
+    elf_machine_str = TextField(index=True)
+
+
 class KnownArchitecture(Base):
     architecture_code = TextField(primary_key=True)
-    elf_machine = IntegerField(index=True)  # TODO make a foreign key
-    elf_class = IntegerField(index=True)  # TODO make a foreign key
+    has_32bit_class = BooleanField(default=False)
+    has_64bit_class = BooleanField(default=False)
+    has_msb_class = BooleanField(default=False)
+    has_lsb_class = BooleanField(default=False)
     # XX add more fields later
     # - ELF code
     # - endianness
+
+
+class ArchitectureEMachineLink(Base):
+    architecture = ForeignKeyField(
+        KnownArchitecture, backref='e_machine_links'
+    )
+    e_machine = ForeignKeyField(EMachineValue, backref='arch_code_links')
+
+    class Meta:
+        primary_key = CompositeKey('architecture', 'e_machine')
 
 
 class KernelSupportedArch(Base):
@@ -138,7 +155,9 @@ db.connect()
 def flush_kernel_db():
     models = [
         KernelVersion,
+        EMachineValue,
         KnownArchitecture,
+        ArchitectureEMachineLink,
         KernelSupportedArch,
         KernelVersionDependency,
         KernelRelevantFile,

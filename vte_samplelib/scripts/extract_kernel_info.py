@@ -33,6 +33,7 @@ def main():
 
     seen_refs: set[str] = set()
     seen_archs: set[str] = set()
+    seen_e_machines: set[str] = set()
 
     for tag_ref in repo.tags:
         tag = tag_ref.object
@@ -60,7 +61,11 @@ def main():
                 arch_code = arch_dir.name
                 if arch_code != 'um':
                     ExtraGitParser(
-                        tree, kernel, arch_code, arch_code in seen_archs
+                        tree,
+                        kernel,
+                        arch_code,
+                        arch_code in seen_archs,
+                        seen_e_machines,
                     )
                     seen_archs.add(arch_code)
 

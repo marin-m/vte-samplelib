@@ -122,6 +122,7 @@ class ExtraGitParser:
         kernel: KernelVersion,
         arch_code: str,
         known_arch: bool,
+        known_e_machines: set[str],
     ):
         pass  # XX wip
         # Indexate fields related to kernel linking + kallsyms
@@ -141,15 +142,28 @@ class ExtraGitParser:
         # 'arch/$ARCH/um/asm/elf.h'
         # 'include/asm-um/elf-$ARCH.h'
         # 'include/asm-$ARCH/elf.h'
+        # For lines like:
+        # /!\ NOTE: There are many E_MACHINE define in
+        #  arch/x86/include/asm/elf.h
+        # #define ELF_ARCH	EM_386
+        # #define ELF_ARCH	EM_X86_64
+        # And there is a EM_S390_OLD
+        #  "#define ELF_ARCH        EM_SH"
+        #  "#define ELF_CLASS       ELFCLASS32"
+        #  "#define ELF_DATA        ELFDATA2LSB"
+        #  "#define ELF_DATA        ELFDATA2MSB"
         # (retrieve per-architecture EM_* defines)
         # (retrieve these files paths)
         # => Fill stuff into structures?
         # $ARCH may be e.g.: 'ppc', 'powerpc', 's390', 'i386', 'x86'...
-        for
+
+        # for XX:
         arch.elf_machine_int = -1  # TODO
         arch.elf_machine_str = ''  # TODO
-        arch.elf_machine_int = -1  # TODO
-        arch.elf_machine_str = ''  # TODO
+        arch.has_32bit_class = ''  # TODO
+        arch.has_64bit_class = ''  # TODO
+        arch.has_msb_class = ''  # TODO
+        arch.has_lsb_class = ''  # TODO
 
         arch.save(force_insert=not known_arch)
 
