@@ -154,7 +154,7 @@ class ChangelogParser:
                     reached_gnuc_verspec = True
             
             if reached_gnuc_verspec:
-                if line.strip():
+                if line.replace('=', '').strip():
                     progname = line[progname_start:progname_end].rstrip()
                     progver = line[progver_start:progver_end].rstrip()
                     progcmd = line[progcmd_start:].rstrip()
