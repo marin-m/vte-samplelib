@@ -18,10 +18,10 @@ from vte_samplelib.version_management.git_extractor import (
 )
 
 REMOTE_URL = (
-    "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
+    'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/'
 )
-TREE_ROOT_URL = REMOTE_URL + "tree/?id=%s"
-SNAPSHOT_URL = REMOTE_URL + "snapshot/%s.tar.gz"
+TREE_ROOT_URL = REMOTE_URL + 'tree/?id=%s'
+SNAPSHOT_URL = REMOTE_URL + 'snapshot/%s.tar.gz'
 
 
 def main():
@@ -29,7 +29,7 @@ def main():
 
     config = ConfigLoader().config_dict
 
-    repo = Repo(config["kernel-tree"]["git-dir"])
+    repo = Repo(config['kernel-tree']['git-dir'])
 
     seen_refs: set[str] = set()
     seen_archs: set[str] = set()
@@ -42,14 +42,14 @@ def main():
             continue
         seen_refs.add(tag.tag)
 
-        if tag_object.type == "commit":
+        if tag_object.type == 'commit':
             tree = tag_object.tree
 
-            info("Writing info for %s to DB" % tag.tag)
+            info('Writing info for %s to DB' % tag.tag)
 
             kernel = KernelVersion()
             kernel.version_string = tag.tag
-            kernel.kernel_source = "git"
+            kernel.kernel_source = 'git'
             kernel.browse_url = TREE_ROOT_URL % tag.tag
             kernel.download_url = SNAPSHOT_URL % tag.tag
             kernel.git_commit = tag_object.hexsha

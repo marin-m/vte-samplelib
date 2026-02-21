@@ -4,8 +4,8 @@ import vte_samplelib.core.database
 
 
 def main():
-    print("test")
+    print('test')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

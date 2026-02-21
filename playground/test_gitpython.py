@@ -2,7 +2,7 @@
 # -*- encoding: Utf-8 -*-
 from os import environ
 
-environ["GIT_PYTHON_TRACE"] = "full"
+environ['GIT_PYTHON_TRACE'] = 'full'
 from logging import basicConfig, INFO
 
 basicConfig(level=INFO)
@@ -12,7 +12,7 @@ basicConfig(level=INFO)
 
 from git import Repo, Blob
 
-KERNEL_DIR = "/home/marin/linux"
+KERNEL_DIR = '/home/marin/linux'
 
 # Cf. https://gitpython.readthedocs.io/en/stable/tutorial.html
 # WIP
@@ -107,10 +107,10 @@ exit()
 
 def print_blob(blob):
     print(
-        "=>",
+        '=>',
         blob.mime_type,
-        "link=%s" % bool(blob.mode == blob.link_mode),
-        "%dk" % (blob.size / 1024),
+        'link=%s' % bool(blob.mode == blob.link_mode),
+        '%dk' % (blob.size / 1024),
         blob.path,
         oct(blob.mode),
         blob.data_stream.read(196),
@@ -121,112 +121,112 @@ for tag_ref in repo.tags:
     tag = tag_ref.object
     tag_object = tag.object
 
-    print(f"[{tag_ref.path} tag={tag.tag} ref={tag.hexsha}]")
-    if tag_object.type == "commit":
+    print(f'[{tag_ref.path} tag={tag.tag} ref={tag.hexsha}]')
+    if tag_object.type == 'commit':
         # if tag_object.committed_datetime != tag_object.authored_datetime:
         #     print('  WARNING MISMATCHING DATES')
         print(
-            f"  [commit ref={tag_object.hexsha} committed_datetime={tag_object.committed_datetime} authored_datetime={tag_object.authored_datetime}]"
+            f'  [commit ref={tag_object.hexsha} committed_datetime={tag_object.committed_datetime} authored_datetime={tag_object.authored_datetime}]'
         )
         tree = tag_object.tree
-        print(f"    [tree ref={tree.hexsha}]")
+        print(f'    [tree ref={tree.hexsha}]')
         print(
-            f"      [{[x.path for x in tree.trees]}] [{[x.path for x in tree.blobs]}]"
+            f'      [{[x.path for x in tree.trees]}] [{[x.path for x in tree.blobs]}]'
         )
-        print("TREE CONTAINS", len(tree.list_traverse()), "OBJECTS")
-        print_blob(tree / "Makefile")
-        print_blob(tree / "Documentation/Changes")
-        if tree["Documentation/Changes"].mode == Blob.link_mode:
-            print_blob(tree / "Documentation/process/changes.rst")
-        print_blob(tree["kernel/kallsyms.c"])
-        print_blob(tree["scripts/kallsyms.c"])
+        print('TREE CONTAINS', len(tree.list_traverse()), 'OBJECTS')
+        print_blob(tree / 'Makefile')
+        print_blob(tree / 'Documentation/Changes')
+        if tree['Documentation/Changes'].mode == Blob.link_mode:
+            print_blob(tree / 'Documentation/process/changes.rst')
+        print_blob(tree['kernel/kallsyms.c'])
+        print_blob(tree['scripts/kallsyms.c'])
         try:
-            print_blob(tree["scripts/kallsyms"])
+            print_blob(tree['scripts/kallsyms'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/x86/boot/header.S"])
+            print_blob(tree['arch/x86/boot/header.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/x86/boot/compressed/vmlinux.lds.S"])
+            print_blob(tree['arch/x86/boot/compressed/vmlinux.lds.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/x86/boot/compressed/Makefile"])
+            print_blob(tree['arch/x86/boot/compressed/Makefile'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/arm64/kernel/.vmlinux.lds.cmd"])
+            print_blob(tree['arch/arm64/kernel/.vmlinux.lds.cmd'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/arm/kernel/vmlinux.lds.S"])
+            print_blob(tree['arch/arm/kernel/vmlinux.lds.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/arm/kernel/boot/Makefile"])
+            print_blob(tree['arch/arm/kernel/boot/Makefile'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/i386/kernel/vmlinux.lds.S"])
+            print_blob(tree['arch/i386/kernel/vmlinux.lds.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/i386/boot/compressed/head.S"])
+            print_blob(tree['arch/i386/boot/compressed/head.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["Documentation/arch/x86/booting-dt.rst"])
+            print_blob(tree['Documentation/arch/x86/booting-dt.rst'])
         except KeyError:
             pass
         try:
-            print_blob(tree["Documentation/arch/arm64/booting.rst"])
+            print_blob(tree['Documentation/arch/arm64/booting.rst'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/i386/boot/bootsect.S"])
+            print_blob(tree['arch/i386/boot/bootsect.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/i386/boot/setup.S"])
+            print_blob(tree['arch/i386/boot/setup.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/i386/boot/compressed/Makefile"])
+            print_blob(tree['arch/i386/boot/compressed/Makefile'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/arm/boot/compressed/piggy.S"])
+            print_blob(tree['arch/arm/boot/compressed/piggy.S'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/arm/boot/compressed/vmlinux.lds.in"])
+            print_blob(tree['arch/arm/boot/compressed/vmlinux.lds.in'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/arm/boot/compressed/Makefile"])
+            print_blob(tree['arch/arm/boot/compressed/Makefile'])
         except KeyError:
             pass
         try:
-            print_blob(tree["Documentation/arm/Booting"])
+            print_blob(tree['Documentation/arm/Booting'])
         except KeyError:
             pass
         try:
-            print_blob(tree["Documentation/x86/boot.txt"])
+            print_blob(tree['Documentation/x86/boot.txt'])
         except KeyError:
             pass
         try:
-            print_blob(tree["Documentation/arch/x86/boot.rst"])
+            print_blob(tree['Documentation/arch/x86/boot.rst'])
         except KeyError:
             pass
         try:
-            print_blob(tree["arch/x86/boot/boot/setup.S"])
+            print_blob(tree['arch/x86/boot/boot/setup.S'])
         except KeyError:
             pass
-        print_blob(tree["arch/arm/boot/compressed/head.S"])
+        print_blob(tree['arch/arm/boot/compressed/head.S'])
         try:
-            print_blob(tree["arch/arm/boot/compressed/vmlinux.lds.S"])
+            print_blob(tree['arch/arm/boot/compressed/vmlinux.lds.S'])
         except KeyError:
             pass
         """
@@ -253,6 +253,6 @@ for tag_ref in repo.tags:
 
                 break
         """
-    elif tag_object.type == "tree":
-        print(f"  [tree ref={tag_object.hexsha}]")
+    elif tag_object.type == 'tree':
+        print(f'  [tree ref={tag_object.hexsha}]')
     print()

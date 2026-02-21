@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(
-    DESCRIPTOR, "re.fossplant.vte_samplelib.kernel_version_db_pb2", globals()
+    DESCRIPTOR, 're.fossplant.vte_samplelib.kernel_version_db_pb2', globals()
 )
 if _descriptor._USE_C_DESCRIPTORS == False:
     DESCRIPTOR._options = None

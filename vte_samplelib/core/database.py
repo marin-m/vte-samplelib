@@ -26,7 +26,7 @@ from logging import basicConfig, DEBUG
 from os import makedirs, environ
 from enum import Enum
 
-environ["GIT_PYTHON_TRACE"] = "full"
+environ['GIT_PYTHON_TRACE'] = 'full'
 basicConfig(level=DEBUG)
 
 from peewee import (
@@ -45,12 +45,12 @@ basicConfig(level=DEBUG)
 CORE_DIR = dirname(realpath(__file__))
 MODULE_DIR = dirname(realpath(CORE_DIR))
 ROOT_DIR = dirname(realpath(MODULE_DIR))
-DB_PATH = realpath(ROOT_DIR + "/database.sqlite3")
+DB_PATH = realpath(ROOT_DIR + '/database.sqlite3')
 
 # TODO: Write basic scrapers before implementing the database?
 
 if not exists(DB_PATH):
-    debug("[i] Database file does not exist: %s, creating..." % DB_PATH)
+    debug('[i] Database file does not exist: %s, creating...' % DB_PATH)
 
 db = SqliteDatabase(DB_PATH)
 
@@ -85,15 +85,15 @@ class KnownArchitecture(Base):
 
 
 class KernelSupportedArch(Base):
-    release = ForeignKeyField(KernelVersion, backref="supported_archs")
+    release = ForeignKeyField(KernelVersion, backref='supported_archs')
     architecture = ForeignKeyField(KnownArchitecture)
 
     class Meta:
-        primary_key = CompositeKey("release", "architecture")
+        primary_key = CompositeKey('release', 'architecture')
 
 
 class KernelRelevantFile(Base):
-    release = ForeignKeyField(KernelVersion, backref="relevant_files")
+    release = ForeignKeyField(KernelVersion, backref='relevant_files')
 
     file_name = TextField()
     # data = TextField()
@@ -104,8 +104,8 @@ class KernelRelevantFile(Base):
 class KernelVersionDependency(Base):
     # Parsed from the `Documentation/Changes` kernel files:
 
-    kernel_release = ForeignKeyField(KernelVersion, backref="dependencies")
-    source_file = ForeignKeyField(KernelRelevantFile, backref="extracted_info")
+    kernel_release = ForeignKeyField(KernelVersion, backref='dependencies')
+    source_file = ForeignKeyField(KernelRelevantFile, backref='extracted_info')
 
     dependency_name = TextField()
     minimal_version = TextField()
@@ -114,7 +114,7 @@ class KernelVersionDependency(Base):
     dependency_is_optional = BooleanField()
 
     class Meta:
-        primary_key = CompositeKey("kernel_release", "base_command")
+        primary_key = CompositeKey('kernel_release', 'base_command')
 
 
 """

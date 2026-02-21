@@ -28,6 +28,9 @@ module-root = ""
 [tool.ruff]
 line-length = 79
 
+[tool.ruff.format]
+quote-style = "single"
+
 [project.urls]
 Homepage = "https://github.com/marin-m/vte-samplelib"
 

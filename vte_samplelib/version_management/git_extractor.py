@@ -110,9 +110,9 @@ from git import Tree, Blob
 # Sample kernel requirements (old): https://github.com/torvalds/linux/blob/v2.6.19/Documentation/Changes
 
 REMOTE_URL = (
-    "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
+    'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/'
 )
-TREE_URL = REMOTE_URL + "tree/%s?id=%s"
+TREE_URL = REMOTE_URL + 'tree/%s?id=%s'
 
 
 class ExtraGitParser:
@@ -126,15 +126,15 @@ class ExtraGitParser:
 class ChangelogParser:
     def __init__(self, tree: Tree, kernel: KernelVersion):
 
-        changelog_file = tree["Documentation/Changes"]
+        changelog_file = tree['Documentation/Changes']
 
         if changelog_file.mode == Blob.link_mode:
-            changelog_file = tree["Documentation/process/changes.rst"]
+            changelog_file = tree['Documentation/process/changes.rst']
 
         try:
-            text = changelog_file.data_stream.read().decode("utf-8")
+            text = changelog_file.data_stream.read().decode('utf-8')
         except UnicodeDecodeError:
-            text = changelog_file.data_stream.read().decode("cp1252")
+            text = changelog_file.data_stream.read().decode('cp1252')
 
         lines = text.splitlines(keepends=False)
 
@@ -151,7 +151,7 @@ class ChangelogParser:
 
         reached_gnuc_verspec = False
 
-        PATTERN = r"(GNU C {2,})(\d[^ ]* {2,}).*?(gcc --version.*)"
+        PATTERN = r'(GNU C {2,})(\d[^ ]* {2,}).*?(gcc --version.*)'
 
         for line in lines:
             if not reached_gnuc_verspec:
@@ -164,7 +164,7 @@ class ChangelogParser:
                     reached_gnuc_verspec = True
 
             if reached_gnuc_verspec:
-                if line.replace("=", "").strip():
+                if line.replace('=', '').strip():
                     progname = line[progname_start:progname_end].rstrip()
                     progver = line[progver_start:progver_end].rstrip()
                     progcmd = line[progcmd_start:].rstrip()
@@ -173,14 +173,14 @@ class ChangelogParser:
                     dep.kernel_release = kernel
                     dep.source_file = rel_file
                     dep.dependency_name = (
-                        progname.replace("\\ [#f1]_", "")
-                        .replace("(optional)", "")
+                        progname.replace('\\ [#f1]_', '')
+                        .replace('(optional)', '')
                         .strip()
                     )
                     dep.minimal_version = progver
-                    dep.base_command = progcmd.split(" ")[0]
+                    dep.base_command = progcmd.split(' ')[0]
                     dep.version_command = progcmd
-                    dep.dependency_is_optional = "(optional)" in progname
+                    dep.dependency_is_optional = '(optional)' in progname
                     dep.save(force_insert=True)
 
                     # XX links things
