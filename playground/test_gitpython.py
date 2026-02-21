@@ -169,7 +169,11 @@ for tag_ref in repo.tags:
         except KeyError:
             pass
         try:
-            print_blob(tree['./arch/powerpc/include/asm/elf.hh'])
+            print_blob(tree['arch/x86/um/asm/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['arch/powerpc/include/asm/elf.h'])
         except KeyError:
             pass
         try:

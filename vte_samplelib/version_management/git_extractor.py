@@ -126,12 +126,32 @@ class ExtraGitParser:
         pass  # XX wip
         # Indexate fields related to kernel linking + kallsyms
 
-        if not known_arch:
-            arch = KnownArchitecture()
-            arch.architecture_code = arch_code
-            arch.elf_machine = -1  # TODO
-            arch.elf_class = -1  # TODO
-            arch.save(force_insert=True)
+        arch = KnownArchitecture()
+        arch.architecture_code = arch_code
+
+        # WIP: parse from one of these path syntaxes:
+        # "include/linux/elf.h"
+        # "include/uapi/linux/elf-em.h"
+        # "include/uapi/linux/elf.h"
+        # (retrieve EM_* + E_CLASS* values)
+        # (retrieve these files paths)
+        # Then
+        # 'arch/$ARCH/include/uapi/asm/elf.h'
+        # 'arch/$ARCH/include/asm/elf.h'
+        # 'arch/$ARCH/um/asm/elf.h'
+        # 'include/asm-um/elf-$ARCH.h'
+        # 'include/asm-$ARCH/elf.h'
+        # (retrieve per-architecture EM_* defines)
+        # (retrieve these files paths)
+        # => Fill stuff into structures?
+        # $ARCH may be e.g.: 'ppc', 'powerpc', 's390', 'i386', 'x86'...
+        for
+        arch.elf_machine_int = -1  # TODO
+        arch.elf_machine_str = ''  # TODO
+        arch.elf_machine_int = -1  # TODO
+        arch.elf_machine_str = ''  # TODO
+
+        arch.save(force_insert=not known_arch)
 
         # TODO populate KernelSupportedArch
 
