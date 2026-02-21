@@ -133,10 +133,26 @@ for tag_ref in repo.tags:
         print(
             f"      [{[x.path for x in tree.trees]}] [{[x.path for x in tree.blobs]}]"
         )
+        print("TREE CONTAINS", len(tree.list_traverse()), "OBJECTS")
         print_blob(tree / "Makefile")
         print_blob(tree / "Documentation/Changes")
         if tree["Documentation/Changes"].mode == Blob.link_mode:
             print_blob(tree / "Documentation/process/changes.rst")
+        print_blob(tree["kernel/kallsyms.c"])
+        print_blob(tree["scripts/kallsyms.c"])
+        try:
+            print_blob(tree["scripts/kallsyms"])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree["arch/x86/boot/header.S"])
+        except KeyError:
+            pass
+        print_blob(tree["arch/arm/boot/compressed/head.S"])
+        try:
+            print_blob(tree["arch/arm/boot/compressed/vmlinux.lds.S"])
+        except KeyError:
+            pass
         """
         for blob in tree.blobs:
             if blob.path == 'Makefile':

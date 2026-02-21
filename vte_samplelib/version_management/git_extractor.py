@@ -109,11 +109,13 @@ from git import Tree, Blob
 
 REMOTE_URL = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/"
 TREE_URL = REMOTE_URL + "tree/%s?id=%s"
-"""
-class ExtraGitParser:
 
-    pass # XX wip
-"""
+
+def __init__(self, tree: Tree, kernel: KernelVersion):
+    class ExtraGitParser:
+
+        pass # XX wip
+        # Indexate fields related to kernel linking + kallsyms
 
 
 class ChangelogParser:

@@ -13,7 +13,7 @@ from git import Repo, Blob
 from logging import info
 
 from vte_samplelib.version_management.git_extractor import (
-    # ExtraGitParser, # TODO
+    ExtraGitParser,
     ChangelogParser,
 )
 
@@ -52,5 +52,7 @@ def main():
             kernel.git_commit = tag_object.hexsha
             kernel.release_date = tag_object.committed_datetime
             kernel.save(force_insert=True)
+
+            ExtraGitParser(tree, kernel)
 
             ChangelogParser(tree, kernel)
