@@ -163,7 +163,7 @@ class ChangelogParser:
                     progcmd = line[progcmd_start:].rstrip()
 
                     dep = KernelVersionDependency()
-                    dep.release = kernel
+                    dep.kernel_release = kernel
                     dep.source_file = rel_file
                     dep.dependency_name = (
                         progname.replace("\\ [#f1]_", "")

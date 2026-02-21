@@ -96,6 +96,7 @@ class KernelRelevantFile(Base):
 class KernelVersionDependency(Base):
     # Parsed from the `Documentation/Changes` kernel files:
 
+    kernel_release = ForeignKeyField(KernelVersion, backref="dependencies")
     source_file = ForeignKeyField(KernelRelevantFile, backref="extracted_info")
 
     dependency_name = TextField()
