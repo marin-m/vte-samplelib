@@ -131,13 +131,16 @@ class ChangelogParser:
 
         lines = text.splitlines(keepends=False)
 
-        dep = KernelRelevantFile()
-        dep.release = kernel
-        dep.file_name = changelog_file.path
-        # dep.data = text
-        dep.architecture_code = None
-        dep.vcs_browser_url = TREE_URL % (dep.file_name, kernel.version_string)
-        dep.save()
+        rel_file = KernelRelevantFile()
+        rel_file.release = kernel
+        rel_file.file_name = changelog_file.path
+        # rel_file.data = text
+        rel_file.architecture_code = None
+        rel_file.vcs_browser_url = TREE_URL % (
+            rel_file.file_name,
+            kernel.version_string,
+        )
+        rel_file.save()
 
         reached_gnuc_verspec = False
 
@@ -161,6 +164,7 @@ class ChangelogParser:
 
                     dep = KernelVersionDependency()
                     dep.release = kernel
+                    dep.source_file = rel_file
                     dep.dependency_name = (
                         progname.replace("\\ [#f1]_", "")
                         .replace("(optional)", "")

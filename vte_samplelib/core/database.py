@@ -84,25 +84,25 @@ class KernelVersion(Base):
     #     => Link to n KernelReleaseDependency
 
 
-class KernelVersionDependency(Base):
-    # Parsed from the `Documentation/Changes` kernel files:
-
-    release = ForeignKeyField(KernelVersion, backref="dependencies")
-
-    dependency_name = TextField()
-    minimal_version = TextField()
-    base_command = TextField(index=True)
-    version_command = TextField()
-    dependency_is_optional = BooleanField()
-
-
 class KernelRelevantFile(Base):
     release = ForeignKeyField(KernelVersion, backref="relevant_files")
 
     file_name = TextField()
     # data = TextField()
     architecture_code = TextField(index=True, null=True)
-    vcs_browser_url = TextField()
+    vcs_browser_url = TextField(primary_key=True)
+
+
+class KernelVersionDependency(Base):
+    # Parsed from the `Documentation/Changes` kernel files:
+
+    source_file = ForeignKeyField(KernelRelevantFile, backref="extracted_info")
+
+    dependency_name = TextField()
+    minimal_version = TextField()
+    base_command = TextField(index=True)
+    version_command = TextField()
+    dependency_is_optional = BooleanField()
 
 
 """
