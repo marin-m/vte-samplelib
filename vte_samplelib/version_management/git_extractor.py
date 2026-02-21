@@ -117,10 +117,23 @@ TREE_URL = REMOTE_URL + 'tree/%s?id=%s'
 
 class ExtraGitParser:
     def __init__(
-        self, tree: Tree, kernel: KernelVersion, seen_archs: set[str]
+        self,
+        tree: Tree,
+        kernel: KernelVersion,
+        arch_code: str,
+        known_arch: bool,
     ):
         pass  # XX wip
         # Indexate fields related to kernel linking + kallsyms
+
+        if not known_arch:
+            arch = KnownArchitecture()
+            arch.architecture_code = arch_code
+            arch.elf_machine = -1  # TODO
+            arch.elf_class = -1  # TODO
+            arch.save(force_insert=True)
+
+        # TODO populate KernelSupportedArch
 
 
 class ChangelogParser:

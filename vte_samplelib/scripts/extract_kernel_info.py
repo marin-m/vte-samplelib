@@ -56,6 +56,12 @@ def main():
             kernel.release_date = tag_object.committed_datetime
             kernel.save(force_insert=True)
 
-            ExtraGitParser(tree, kernel, seen_archs)
+            for arch_dir in tree['arch'].trees:
+                arch_code = arch_dir.name
+                if arch_code != 'um':
+                    ExtraGitParser(
+                        tree, kernel, arch_code, arch_code in seen_archs
+                    )
+                    seen_archs.add(arch_code)
 
             ChangelogParser(tree, kernel)

@@ -35,6 +35,7 @@ from peewee import (
     CompositeKey,
     Check,
     TextField,
+    IntegerField,
     DateTimeField,
     BooleanField,
     ForeignKeyField,
@@ -79,6 +80,8 @@ class KernelVersion(Base):
 
 class KnownArchitecture(Base):
     architecture_code = TextField(primary_key=True)
+    elf_machine = IntegerField(index=True)  # TODO make a foreign key
+    elf_class = IntegerField(index=True)  # TODO make a foreign key
     # XX add more fields later
     # - ELF code
     # - endianness

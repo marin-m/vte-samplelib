@@ -145,7 +145,31 @@ for tag_ref in repo.tags:
         except KeyError:
             pass
         try:
-            print_blob(tree['arch/s390/include/asm/elf.h'])
+            print_blob(tree['include/linux/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['include/linux/elf-em.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['include/uapi/linux/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['include/uapi/linux/elf-em.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['arch/microblaze/include/uapi/asm/elf.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['include/asm-um/elf-ppc.h'])
+        except KeyError:
+            pass
+        try:
+            print_blob(tree['./arch/powerpc/include/asm/elf.hh'])
         except KeyError:
             pass
         try:
