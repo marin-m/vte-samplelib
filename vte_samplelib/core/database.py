@@ -148,11 +148,15 @@ class StoredKernel(Base):
     XX
         Link to disk file
             Link to KernelRelease etc
+"""
 
 class DebianRelease(Base):
 
-    XX
-"""
+    docker_archive_name = TextField(primary_key = True)
+    debian_version_name = TextField(index = True)
+    debian_version_number = TextField(index = True)
+    debian_release_date = DateTimeField(index = True)
+
 
 db.connect()
 
@@ -166,6 +170,14 @@ def flush_kernel_db():
         KernelSupportedArch,
         KernelVersionDependency,
         KernelRelevantFile,
+    ]
+
+    db.drop_tables(models)
+    db.create_tables(models)
+
+def flush_debian_db():
+    models = [
+        DebianRelease,
     ]
 
     db.drop_tables(models)
