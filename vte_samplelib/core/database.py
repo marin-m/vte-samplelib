@@ -64,6 +64,11 @@ class Base(Model):
 
 # Cf. https://docs.peewee-orm.com/en/latest/peewee/models.html#field-types-table
 
+# TODO Migrate to SQLAlchemy?
+# Here are the griefs towards Peewee:
+#  - No secondary tables
+#  - Enum fields missing
+
 
 class KernelVersion(Base):
     version_string = TextField(primary_key=True)  # Git tag
@@ -80,7 +85,7 @@ class KernelVersion(Base):
 
 class EMachineValue(Base):
     elf_machine_int = IntegerField(index=True)
-    elf_machine_str = TextField(index=True)
+    elf_machine_str = TextField(primary_key=True)
 
 
 class KnownArchitecture(Base):

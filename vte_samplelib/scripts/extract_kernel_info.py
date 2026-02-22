@@ -4,6 +4,7 @@ from vte_samplelib.core.config_loader import ConfigLoader
 
 from vte_samplelib.core.database import (
     KernelVersion,
+    EMachineValue,
     KernelVersionDependency,
     KernelRelevantFile,
     flush_kernel_db,
@@ -14,6 +15,7 @@ from logging import info
 
 from vte_samplelib.version_management.git_extractor import (
     ExtraGitParser,
+    ExtraGitParserArchSpecific,
     ChangelogParser,
 )
 
@@ -33,7 +35,8 @@ def main():
 
     seen_refs: set[str] = set()
     seen_archs: set[str] = set()
-    seen_e_machines: set[str] = set()
+    seen_e_machines: dict[str, EMachineValue] = {}
+    seen_arch_e_machines: set[tuple[str, int]] = set()
 
     for tag_ref in repo.tags:
         tag = tag_ref.object
@@ -57,15 +60,22 @@ def main():
             kernel.release_date = tag_object.committed_datetime
             kernel.save(force_insert=True)
 
+            ExtraGitParser(
+                tree,
+                kernel,
+                seen_e_machines,
+            )
+
             for arch_dir in tree['arch'].trees:
                 arch_code = arch_dir.name
                 if arch_code != 'um':
-                    ExtraGitParser(
+                    ExtraGitParserArchSpecific(
                         tree,
                         kernel,
                         arch_code,
                         arch_code in seen_archs,
                         seen_e_machines,
+                        seen_arch_e_machines,
                     )
                     seen_archs.add(arch_code)
 
