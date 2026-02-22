@@ -126,6 +126,28 @@ class ExtraGitParser:
     ):
 
         for path in (
+            'kernel/kallsyms.c',
+            'scripts/kallsyms.c',
+            'scripts/kallsyms',
+        ):
+            try:
+                fd = tree[path]
+            except KeyError:
+                pass
+            else:
+                buf = fd.data_stream.read().decode('utf-8')
+
+                rel_file = KernelRelevantFile()
+                rel_file.release = kernel
+                rel_file.file_name = path
+                rel_file.architecture_code = None
+                rel_file.vcs_browser_url = TREE_URL % (
+                    path,
+                    kernel.version_string,
+                )
+                rel_file.save(force_insert=True)
+
+        for path in (
             'include/linux/elf-em.h',
             'include/linux/elf.h',
             'include/uapi/linux/elf-em.h',
@@ -182,6 +204,69 @@ class ExtraGitParserArchSpecific:
         has_lsb_class = False
 
         e_machines_for_arch: set[str] = set()
+
+        for prefix in [
+            f'Documentation/arch/{ arch_code }/',
+            f'Documentation/{ arch_code }/'
+        ]:
+            for suffix in [
+                'boot.txt',
+                'booting.rst',
+                'booting-dt.rst',
+                'Booting'
+            ]:
+                try:
+                    fd = tree[prefix + suffix]
+                except KeyError:
+                    pass
+                else:
+                    buf = fd.data_stream.read().decode('utf-8')
+
+                    rel_file = KernelRelevantFile()
+                    rel_file.release = kernel
+                    rel_file.file_name = prefix + suffix
+                    rel_file.architecture_code = arch_code
+                    rel_file.vcs_browser_url = TREE_URL % (
+                        prefix + suffix,
+                        kernel.version_string,
+                    )
+                    rel_file.save(force_insert=True)
+
+        for prefix in [
+            f'arch/{ arch_code }/boot/compressed/',
+            f'arch/{ arch_code }/boot/'
+            f'arch/{ arch_code }/kernel/',
+            f'arch/{ arch_code }/arch-v10/',
+            f'arch/{ arch_code }/kernel/boot/',
+            f'arch/{ arch_code }/boot/boot/',
+        ]:
+            for suffix in [
+                'vmlinux.lds.S',
+                'vmlinux.lds.in',
+                '.vmlinux.lds.cmd',
+                'head.S'
+                'header.S',
+                'piggy.S',
+                'bootsect.S',
+                'setup.S',
+                'Makefile'
+            ]:
+                try:
+                    fd = tree[prefix + suffix]
+                except KeyError:
+                    pass
+                else:
+                    buf = fd.data_stream.read().decode('utf-8')
+
+                    rel_file = KernelRelevantFile()
+                    rel_file.release = kernel
+                    rel_file.file_name = prefix + suffix
+                    rel_file.architecture_code = arch_code
+                    rel_file.vcs_browser_url = TREE_URL % (
+                        prefix + suffix,
+                        kernel.version_string,
+                    )
+                    rel_file.save(force_insert=True)
 
         for path in [
             f'arch/{arch_code}/include/uapi/asm/elf.h',
