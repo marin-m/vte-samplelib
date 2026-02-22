@@ -76,9 +76,9 @@ class KernelVersion(Base):
         constraints=[Check("kernel_source in ('git', 'tarball')")]
     )
 
-    browse_url = TextField()
+    browse_url = TextField(null = True)
     download_url = TextField()
-    git_commit = TextField()
+    git_commit = TextField(null = True)
 
     release_date = DateTimeField()
 
@@ -123,7 +123,7 @@ class KernelRelevantFile(Base):
     file_name = TextField()
     # data = TextField()
     architecture_code = TextField(index=True, null=True)
-    vcs_browser_url = TextField(primary_key=True)
+    vcs_browser_url = TextField(null = True)
 
 
 class KernelVersionDependency(Base):
