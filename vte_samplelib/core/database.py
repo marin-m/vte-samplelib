@@ -68,6 +68,7 @@ class Base(Model):
 #  - No secondary tables
 #  - Enum fields missing
 
+
 class KernelVersion(Base):
     version_string = TextField(primary_key=True)  # Git tag
     kernel_source = TextField(
@@ -80,9 +81,11 @@ class KernelVersion(Base):
 
     release_date = DateTimeField()
 
+
 class EMachineValue(Base):
     elf_machine_int = IntegerField(index=True)
     elf_machine_str = TextField(primary_key=True)
+
 
 class KnownArchitecture(Base):
     architecture_code = TextField(primary_key=True)
@@ -90,6 +93,7 @@ class KnownArchitecture(Base):
     has_64bit_class = BooleanField(default=False)
     has_msb_class = BooleanField(default=False)
     has_lsb_class = BooleanField(default=False)
+
 
 class ArchitectureEMachineLink(Base):
     architecture = ForeignKeyField(

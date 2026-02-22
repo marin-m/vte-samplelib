@@ -51,10 +51,12 @@ from vte_samplelib.core.database import (
 
 """
 
+
 def main():
 
     flush_debian_db()
     populate_debian_versions_static()
+
 
 def populate_debian_versions_static():
 

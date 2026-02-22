@@ -211,6 +211,9 @@ class ExtraGitParserArchSpecific:
         ]:
             for suffix in [
                 'boot.txt',
+                'booting.txt',
+                'booting-dt.txt',
+                'boot.rst',
                 'booting.rst',
                 'booting-dt.rst',
                 'Booting',
@@ -238,12 +241,14 @@ class ExtraGitParserArchSpecific:
             f'arch/{arch_code}/arch-v10/',
             f'arch/{arch_code}/kernel/boot/',
             f'arch/{arch_code}/boot/boot/',
+            f'arch/{arch_code}/boot/',
         ]:
             for suffix in [
                 'vmlinux.lds.S',
                 'vmlinux.lds.in',
                 '.vmlinux.lds.cmd',
-                'head.Sheader.S',
+                'head.S',
+                'header.S',
                 'piggy.S',
                 'bootsect.S',
                 'setup.S',
