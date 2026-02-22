@@ -1,5 +1,7 @@
 # vte-samplelib
 
+This repository contains an additional package to [vmlinux-to-elf](https://github.com/marin-m/vmlinux-to-elf) meant to construct a database of kernel versions, architecture, interesting files (DONE), of Debian relases (DONE), to sort out available kernel samples (TODO), provide CI/CD (TODO), generate kernel blobs with and without symbols from scratch (TODO)
+
 Work-in-process: Make a CI/CD-alike pipeline to **build kernels and generate usable test samples**
 
 Cf. http://synology-marin/mediawiki/index.php/Vmlinux-to-elf/Samples_library
@@ -8,7 +10,7 @@ Use `uv sync` to create a local `.venv` and/or `uv tool install -e .` to make th
 
 > TODO: Make a simple web frontend with Flask?
 
-> TODO: Use samples sorted within folders with symlink (by-version, by-architecture, etc.) just like https://github.com/P1sec/capture-zoo for PCAPs?
+> TODO: Use samples sorted within folders with symlink (by-version, by-architecture, etc.)?
 
 ## DONE: Tools to populate a reusable kernel+kernel assets+Debian versions database
 

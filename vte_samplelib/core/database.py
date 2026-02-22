@@ -49,8 +49,6 @@ MODULE_DIR = dirname(realpath(CORE_DIR))
 ROOT_DIR = dirname(realpath(MODULE_DIR))
 DB_PATH = realpath(ROOT_DIR + '/database.sqlite3')
 
-# TODO: Write basic scrapers before implementing the database?
-
 if not exists(DB_PATH):
     debug('[i] Database file does not exist: %s, creating...' % DB_PATH)
 
@@ -65,11 +63,10 @@ class Base(Model):
 
 # Cf. https://docs.peewee-orm.com/en/latest/peewee/models.html#field-types-table
 
-# TODO Migrate to SQLAlchemy?
+# Maybe migrate to SQLAlchemy?
 # Here are the griefs towards Peewee:
 #  - No secondary tables
 #  - Enum fields missing
-
 
 class KernelVersion(Base):
     version_string = TextField(primary_key=True)  # Git tag
@@ -83,11 +80,9 @@ class KernelVersion(Base):
 
     release_date = DateTimeField()
 
-
 class EMachineValue(Base):
     elf_machine_int = IntegerField(index=True)
     elf_machine_str = TextField(primary_key=True)
-
 
 class KnownArchitecture(Base):
     architecture_code = TextField(primary_key=True)
@@ -95,10 +90,6 @@ class KnownArchitecture(Base):
     has_64bit_class = BooleanField(default=False)
     has_msb_class = BooleanField(default=False)
     has_lsb_class = BooleanField(default=False)
-    # XX add more fields later
-    # - ELF code
-    # - endianness
-
 
 class ArchitectureEMachineLink(Base):
     architecture = ForeignKeyField(
