@@ -5,6 +5,7 @@ from vte_samplelib.core.config_loader import ConfigLoader
 from vte_samplelib.core.database import (
     KernelVersion,
     EMachineValue,
+    KnownArchitecture,
     KernelVersionDependency,
     KernelRelevantFile,
     flush_kernel_db,
@@ -34,7 +35,7 @@ def main():
     repo = Repo(config['kernel-tree']['git-dir'])
 
     seen_refs: set[str] = set()
-    seen_archs: set[str] = set()
+    seen_archs: dict[str, KnownArchitecture] = {}
     seen_e_machines: dict[str, EMachineValue] = {}
     seen_arch_e_machines: set[tuple[str, int]] = set()
 
@@ -73,10 +74,9 @@ def main():
                         tree,
                         kernel,
                         arch_code,
-                        arch_code in seen_archs,
+                        seen_archs,
                         seen_e_machines,
                         seen_arch_e_machines,
                     )
-                    seen_archs.add(arch_code)
 
             ChangelogParser(tree, kernel)

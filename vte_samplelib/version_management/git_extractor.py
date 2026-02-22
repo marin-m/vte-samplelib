@@ -170,7 +170,7 @@ class ExtraGitParserArchSpecific:
         tree: Tree,
         kernel: KernelVersion,
         arch_code: str,
-        known_arch: bool,
+        known_archs: dict[str, KnownArchitecture],
         known_e_machines: dict[str, EMachineValue],
         known_arch_e_machines: set[tuple[str, int]],
     ):
@@ -183,13 +183,12 @@ class ExtraGitParserArchSpecific:
 
         e_machines_for_arch: set[str] = set()
 
-        # Then
         for path in [
-            f'arch/{arch_code}/include/uapi/asm/elf.h'
-            f'arch/{arch_code}/include/asm/elf.h'
-            f'arch/{arch_code}/um/asm/elf.h'
-            f'include/asm-um/elf-{arch_code}.h'
-            f'include/asm-{arch_code}/elf.h'
+            f'arch/{arch_code}/include/uapi/asm/elf.h',
+            f'arch/{arch_code}/include/asm/elf.h',
+            f'arch/{arch_code}/um/asm/elf.h',
+            f'include/asm-um/elf-{arch_code}.h',
+            f'include/asm-{arch_code}/elf.h',
         ]:
             try:
                 fd = tree[path]
@@ -207,6 +206,21 @@ class ExtraGitParserArchSpecific:
                     kernel.version_string,
                 )
                 rel_file.save(force_insert=True)
+
+                for match in finditer(
+                    r'#define\s+(EM_[A-Z0-9_]+)\s+([0-9]+)',
+                    buf,
+                ):
+                    elf_machine_str = match.group(1)
+                    elf_machine_int = match.group(2)
+
+                    if elf_machine_str not in known_e_machines:
+                        e_machine = EMachineValue()
+                        e_machine.elf_machine_str = elf_machine_str
+                        e_machine.elf_machine_int = elf_machine_int
+                        e_machine.save(force_insert=True)
+
+                        known_e_machines[elf_machine_str] = e_machine
 
                 # For lines like:
                 # #define ELF_ARCH	EM_386
@@ -239,10 +253,19 @@ class ExtraGitParserArchSpecific:
                     if search(r'#define\s+ELF_DATA\s+ELFDATA2LSB', buf):
                         has_lsb_class = True
 
-        if not not known_arch:
+        if arch_code not in known_archs:
             arch = KnownArchitecture()
             arch.architecture_code = arch_code
+        else:
+            arch = known_archs[arch_code]
 
+        if (
+            arch_code not in known_archs
+            or has_32bit_class
+            or has_64bit_class
+            or has_msb_class
+            or has_lsb_class
+        ):
             if has_32bit_class:
                 arch.has_32bit_class = has_32bit_class
             if has_64bit_class:
@@ -252,22 +275,21 @@ class ExtraGitParserArchSpecific:
             if has_lsb_class:
                 arch.has_lsb_class = has_lsb_class
 
-            arch.save(force_insert=True)
+            arch.save(force_insert=arch_code not in known_archs)
+            known_archs[arch_code] = arch
 
         for e_machine_str in e_machines_for_arch:
-            link = ArchitectureEMachineLink()
-            link.architecture = arch
-            link.e_machine = known_e_machines[elf_machine_str]
-            link.save(
-                force_insert=(arch_code, elf_machine_str)
-                not in known_arch_e_machines
-            )
+            if (arch_code, elf_machine_str) not in known_arch_e_machines:
+                link = ArchitectureEMachineLink()
+                link.architecture = arch
+                link.e_machine = known_e_machines[elf_machine_str]
+                link.save(force_insert=True)
 
-            known_arch_e_machines.add((arch_code, elf_machine_str))
+                known_arch_e_machines.add((arch_code, elf_machine_str))
 
         link = KernelSupportedArch()
         link.release = kernel
-        link.architecture = arch
+        link.architecture = arch_code
         link.save(force_insert=True)
 
 
