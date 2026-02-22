@@ -288,7 +288,7 @@ class ExtraGitParserArchSpecific:
             arch.save(force_insert=arch_code not in known_archs)
             known_archs[arch_code] = arch
 
-        for e_machine_str in e_machines_for_arch:
+        for elf_machine_str in e_machines_for_arch:
             if (arch_code, elf_machine_str) not in known_arch_e_machines:
                 link = ArchitectureEMachineLink()
                 link.architecture = arch
