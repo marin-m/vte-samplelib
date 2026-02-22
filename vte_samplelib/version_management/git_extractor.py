@@ -261,10 +261,10 @@ class ExtraGitParserArchSpecific:
 
         if (
             arch_code not in known_archs
-            or has_32bit_class
-            or has_64bit_class
-            or has_msb_class
-            or has_lsb_class
+            or (has_32bit_class and not arch.has_32bit_class)
+            or (has_64bit_class and not arch.has_64bit_class)
+            or (has_msb_class and not arch.has_msb_class)
+            or (has_lsb_class and not arch.has_lsb_class)
         ):
             if has_32bit_class:
                 arch.has_32bit_class = has_32bit_class
