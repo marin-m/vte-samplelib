@@ -238,20 +238,30 @@ class ExtraGitParserArchSpecific:
                 # $ARCH may be e.g.: 'ppc', 'powerpc', 's390', 'i386', 'x86'...
 
                 for match in finditer(
-                    r'#define\s+ELF_ARCH\s+(EM_[A-Z0-9_]+)', buf
+                    r'(EM_[A-Z0-9_]+)',
+                    buf,  # r'#define\s+ELF_ARCH\s+(EM_[A-Z0-9_]+)'
                 ):
                     elf_machine_str = match.group(1)
 
-                    e_machines_for_arch.add(elf_machine_str)
+                    if elf_machine_str in known_e_machines:
+                        e_machines_for_arch.add(elf_machine_str)
 
-                    if search(r'#define\s+ELF_CLASS\s+ELFCLASS32', buf):
-                        has_32bit_class = True
-                    if search(r'#define\s+ELF_CLASS\s+ELFCLASS64', buf):
-                        has_64bit_class = True
-                    if search(r'#define\s+ELF_DATA\s+ELFDATA2MSB', buf):
-                        has_msb_class = True
-                    if search(r'#define\s+ELF_DATA\s+ELFDATA2LSB', buf):
-                        has_lsb_class = True
+                if search(
+                    r'ELFCLASS32', buf
+                ):  # r'#define\s+ELF_CLASS\s+ELFCLASS32'
+                    has_32bit_class = True
+                if search(
+                    r'ELFCLASS64', buf
+                ):  # r'#define\s+ELF_CLASS\s+ELFCLASS64'
+                    has_64bit_class = True
+                if search(
+                    r'ELFDATA2MSB', buf
+                ):  # r'#define\s+ELF_DATA\s+ELFDATA2MSB'
+                    has_msb_class = True
+                if search(
+                    r'ELFDATA2LSB', buf
+                ):  # r'#define\s+ELF_DATA\s+ELFDATA2LSB'
+                    has_lsb_class = True
 
         if arch_code not in known_archs:
             arch = KnownArchitecture()
