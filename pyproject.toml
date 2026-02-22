@@ -25,16 +25,17 @@ license-files = ["LICENSE"]
 module-name = "vte_samplelib"
 module-root = ""
 
+[project.scripts]
+samplelib-show-db = "vte_samplelib.scripts.show_db:main"
+samplelib-show-config = "vte_samplelib.scripts.show_config:main"
+samplelib-extract-info = "vte_samplelib.scripts.extract_kernel_info:main"
+samplelib-populate-debian-info = "vte_samplelib.scripts.populate_debian_info:main"
+
+[project.urls]
+Homepage = "https://github.com/marin-m/vte-samplelib"
+
 [tool.ruff]
 line-length = 79
 
 [tool.ruff.format]
 quote-style = "single"
-
-[project.urls]
-Homepage = "https://github.com/marin-m/vte-samplelib"
-
-[project.scripts]
-samplelib-show-db = "vte_samplelib.scripts.show_db:main"
-samplelib-show-config = "vte_samplelib.scripts.show_config:main"
-samplelib-extract-info = "vte_samplelib.scripts.extract_kernel_info:main"

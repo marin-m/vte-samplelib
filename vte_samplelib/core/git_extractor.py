@@ -206,14 +206,14 @@ class ExtraGitParserArchSpecific:
         e_machines_for_arch: set[str] = set()
 
         for prefix in [
-            f'Documentation/arch/{ arch_code }/',
-            f'Documentation/{ arch_code }/'
+            f'Documentation/arch/{arch_code}/',
+            f'Documentation/{arch_code}/',
         ]:
             for suffix in [
                 'boot.txt',
                 'booting.rst',
                 'booting-dt.rst',
-                'Booting'
+                'Booting',
             ]:
                 try:
                     fd = tree[prefix + suffix]
@@ -233,23 +233,21 @@ class ExtraGitParserArchSpecific:
                     rel_file.save(force_insert=True)
 
         for prefix in [
-            f'arch/{ arch_code }/boot/compressed/',
-            f'arch/{ arch_code }/boot/'
-            f'arch/{ arch_code }/kernel/',
-            f'arch/{ arch_code }/arch-v10/',
-            f'arch/{ arch_code }/kernel/boot/',
-            f'arch/{ arch_code }/boot/boot/',
+            f'arch/{arch_code}/boot/compressed/',
+            f'arch/{arch_code}/boot/arch/{arch_code}/kernel/',
+            f'arch/{arch_code}/arch-v10/',
+            f'arch/{arch_code}/kernel/boot/',
+            f'arch/{arch_code}/boot/boot/',
         ]:
             for suffix in [
                 'vmlinux.lds.S',
                 'vmlinux.lds.in',
                 '.vmlinux.lds.cmd',
-                'head.S'
-                'header.S',
+                'head.Sheader.S',
                 'piggy.S',
                 'bootsect.S',
                 'setup.S',
-                'Makefile'
+                'Makefile',
             ]:
                 try:
                     fd = tree[prefix + suffix]

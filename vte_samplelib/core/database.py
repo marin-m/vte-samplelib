@@ -36,6 +36,7 @@ from peewee import (
     Check,
     TextField,
     IntegerField,
+    DateField,
     DateTimeField,
     BooleanField,
     ForeignKeyField,
@@ -76,9 +77,9 @@ class KernelVersion(Base):
         constraints=[Check("kernel_source in ('git', 'tarball')")]
     )
 
-    browse_url = TextField(null = True)
+    browse_url = TextField(null=True)
     download_url = TextField()
-    git_commit = TextField(null = True)
+    git_commit = TextField(null=True)
 
     release_date = DateTimeField()
 
@@ -123,7 +124,7 @@ class KernelRelevantFile(Base):
     file_name = TextField()
     # data = TextField()
     architecture_code = TextField(index=True, null=True)
-    vcs_browser_url = TextField(null = True)
+    vcs_browser_url = TextField(null=True)
 
 
 class KernelVersionDependency(Base):
@@ -150,12 +151,12 @@ class StoredKernel(Base):
             Link to KernelRelease etc
 """
 
-class DebianRelease(Base):
 
-    docker_archive_name = TextField(primary_key = True)
-    debian_version_name = TextField(index = True)
-    debian_version_number = TextField(index = True)
-    debian_release_date = DateTimeField(index = True)
+class DebianRelease(Base):
+    docker_archive_name = TextField(primary_key=True)
+    debian_version_name = TextField(index=True)
+    debian_version_number = TextField(index=True)
+    debian_release_date = DateField(index=True)
 
 
 db.connect()
@@ -174,6 +175,7 @@ def flush_kernel_db():
 
     db.drop_tables(models)
     db.create_tables(models)
+
 
 def flush_debian_db():
     models = [

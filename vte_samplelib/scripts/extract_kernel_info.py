@@ -14,7 +14,7 @@ from vte_samplelib.core.database import (
 from git import Repo, Blob
 from logging import info
 
-from vte_samplelib.version_management.git_extractor import (
+from vte_samplelib.core.git_extractor import (
     ExtraGitParser,
     ExtraGitParserArchSpecific,
     ChangelogParser,
