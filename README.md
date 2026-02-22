@@ -6,6 +6,8 @@ Cf. http://synology-marin/mediawiki/index.php/Vmlinux-to-elf/Samples_library
 
 Use `uv sync` to create a local `.venv` and/or `uv tool install -e .` to make the script commands in `vte_samplelib/scripts` usable locally (in `~/.local/bin` with a symlink to the source directory).
 
+> TODO: Make a simple web frontend with Flask?
+
 > TODO: Use samples sorted within folders with symlink (by-version, by-architecture, etc.) just like https://github.com/P1sec/capture-zoo for PCAPs?
 
 ## Utils to write proposals
