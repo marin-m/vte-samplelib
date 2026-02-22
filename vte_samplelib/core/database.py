@@ -21,8 +21,8 @@
 WIP 2025-01-25: Define database schema here
 """
 
+from logging import basicConfig, DEBUG, debug
 from os.path import dirname, realpath, exists
-from logging import basicConfig, DEBUG
 from os import makedirs, environ
 from enum import Enum
 
