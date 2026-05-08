@@ -237,7 +237,7 @@ class ExtraGitParserArchSpecific:
 
         for prefix in [
             f'arch/{arch_code}/boot/compressed/',
-            f'arch/{arch_code}/boot/arch/{arch_code}/kernel/',
+            f'arch/{arch_code}/kernel/',
             f'arch/{arch_code}/arch-v10/',
             f'arch/{arch_code}/kernel/boot/',
             f'arch/{arch_code}/boot/boot/',
