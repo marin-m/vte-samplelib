@@ -1,0 +1,13 @@
+    
+
+Add support for android boot image version 0 which was used on android 8 and earlier.
+
+Added an offset-range heuristic that computes the feasible base interval from min/max r_offset and image length, then picks a 64K‑aligned base inside it; still prefers the legacy addend guess when it fits.
+
+This should fix a lot of WARNING! bad rela offset errors.
+
+This should fix #44 .
+
+
+4.9.170-aarch64.zip
+Here is a kernel with base address 0xffffff8008080000 that could trigger bad rela errors before, due to 0xffffff8008000000 being used as text address candidate
